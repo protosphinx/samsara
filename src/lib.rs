@@ -18,6 +18,7 @@
 pub mod arena;
 pub mod atomic;
 pub mod barrier;
+pub mod concurrent;
 pub mod marker;
 pub mod region;
 pub mod remembered_set;
@@ -25,6 +26,7 @@ pub mod remembered_set;
 pub use arena::{Arena, Handle};
 pub use atomic::{AtomicPhase, AtomicWriteBarrier};
 pub use barrier::{MarkStack, Phase, WriteBarrier};
+pub use concurrent::concurrent_mark;
 pub use marker::{mark, Color, ObjectGraph};
 pub use region::{Region, RegionHandle, RegionHeap, RegionState, REGION_SIZE};
 pub use remembered_set::RememberedSet;

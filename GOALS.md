@@ -32,13 +32,22 @@ Sequenced milestones to a working concurrent mark-region GC.
 - Tests: 16 threads × 200 records all arrive; Idle phase records nothing;
   CAS refuses out-of-order transitions
 
-## v0.4 - concurrent marking
+## v0.4 - concurrent marking ✦ **shipped**
 
-- Mutator and collector run simultaneously
-- Handshake protocol for stack snapshotting
-- Loom-checked: tri-color invariant under N concurrent mutators × 1 collector
+- `concurrent_mark` spawns a worker thread that drains the shared mark
+  stack and remembered set while the mutator continues issuing captures
+- Termination protocol: mutator flips `AtomicPhase` away from `Marking`;
+  marker performs a final drain and exits
+- Tests: reachable set marked, SATB captures picked up mid-run, busy
+  mutator producing 1000 duplicate captures, prompt termination on no work
 
-## v0.4 - generational + remembered sets
+## v0.5 - Loom-checked correctness
+
+- Loom tests against the marker under all interleavings up to N mutators
+- The "logical correctness under any schedule" property
+- Documents tested invariants
+
+## v0.6 - generational + remembered sets
 
 - Young / old region partition
 - Lock-free card-marking remembered set
