@@ -22,7 +22,6 @@
 //!
 //! That invariant is what the tests in this module demonstrate.
 
-use std::collections::HashSet;
 
 /// A simple FIFO/LIFO stack of object identifiers awaiting scan.
 #[derive(Default, Debug, Clone)]
@@ -96,6 +95,7 @@ impl<'a> WriteBarrier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashSet;
 
     /// A small mutable adjacency-list graph used to demonstrate the SATB
     /// invariant. Nodes are `u32`s; edges are owned by the source.
@@ -209,7 +209,7 @@ mod tests {
             stack.push(child);
         }
         // Stack now: [B]. A is black-equivalent (not on stack any more).
-        let mut black: HashSet<u32> = [a].iter().copied().collect();
+        let black: HashSet<u32> = [a].iter().copied().collect();
 
         // Mutator: A's edge to B is overwritten with edge to D. SATB fires
         // BEFORE the mutation, capturing B (a second time, harmless).
