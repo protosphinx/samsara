@@ -49,13 +49,27 @@ Sequenced milestones to a working concurrent mark-region GC.
   loss, 4 producers + 4 consumers drain to empty, interleaved push/pop
   under contention with no duplicate values
 
-## v0.6 - epoch-protected stack + Loom-checked correctness
+## v0.6 - hazard pointer registry ✦ **shipped**
 
-- Hazard pointers or epoch-based reclamation to defeat ABA
+- `HazardRegistry` with `MAX_HAZARDS=64` slots; `acquire` / `protect` /
+  `clear` / `is_hazarded` / `snapshot`
+- `HazardSlot<'r>` RAII guard releases on drop
+- Tests: acquire/release, protect-then-is-hazarded, drop clears protection,
+  snapshot returns published pointers, 8 threads claim distinct slots,
+  exhaustion returns None
+
+## v0.7 - SafeTreiberStack with deferred reclamation
+
+- Pop publishes the head pointer to a hazard slot before dereferencing
+- Retire defers free until no slot publishes the pointer
 - Wire the safe stack into `RememberedSet` behind a feature flag
-- Loom tests for the marker under all interleavings up to N mutators
 
-## v0.7 - generational + remembered sets
+## v0.8 - Loom-checked correctness
+
+- Loom tests for the marker under all interleavings up to N mutators
+- Loom tests for the SafeTreiberStack push/pop interleavings
+
+## v0.9 - generational + remembered sets
 
 - Young / old region partition
 - Lock-free card-marking remembered set

@@ -22,9 +22,10 @@ samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-colo
 | 0.3 | Atomic phase + thread-safe write barrier + multi-producer remembered set | **shipped** |
 | 0.4 | Concurrent marker thread; mutator and collector run simultaneously | **shipped** |
 | 0.5 | Treiber lock-free stack as a faster RememberedSet substrate | **shipped** |
-| 0.6 | Hazard-pointer / epoch-protected lock-free stack; wire into RememberedSet | next |
-| 0.7 | Loom-checked correctness under all interleavings | |
-| 0.8 | Generational regions | |
+| 0.6 | Hazard-pointer registry primitive (acquire/protect/clear/scan) | **shipped** |
+| 0.7 | Wire hazards into a SafeTreiberStack with deferred reclamation | next |
+| 0.8 | Loom-checked correctness under all interleavings | |
+| 0.9 | Generational regions | |
 | 0.5 | Loom-checked correctness + replay-tested mutator/collector races | |
 
 ## The tri-color invariant
