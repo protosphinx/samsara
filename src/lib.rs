@@ -23,6 +23,7 @@ pub mod hazard;
 pub mod marker;
 pub mod region;
 pub mod remembered_set;
+pub mod safe_treiber;
 pub mod treiber;
 
 pub use arena::{Arena, Handle};
@@ -33,4 +34,5 @@ pub use hazard::{HazardRegistry, HazardSlot};
 pub use marker::{mark, Color, ObjectGraph};
 pub use region::{Region, RegionHandle, RegionHeap, RegionState, REGION_SIZE};
 pub use remembered_set::RememberedSet;
+pub use safe_treiber::SafeTreiberStack;
 pub use treiber::TreiberStack;

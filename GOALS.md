@@ -58,11 +58,16 @@ Sequenced milestones to a working concurrent mark-region GC.
   snapshot returns published pointers, 8 threads claim distinct slots,
   exhaustion returns None
 
-## v0.7 - SafeTreiberStack with deferred reclamation
+## v0.7 - SafeTreiberStack ✦ **shipped**
 
-- Pop publishes the head pointer to a hazard slot before dereferencing
-- Retire defers free until no slot publishes the pointer
-- Wire the safe stack into `RememberedSet` behind a feature flag
+- `SafeTreiberStack` with hazard-protected pop, deferred reclamation,
+  amortized retire scans at `RETIRE_THRESHOLD = 64`
+- Verify-after-protect: load head, publish hazard, reload to confirm,
+  only then dereference. The load-bearing soundness step.
+- Tests: single-thread LIFO, 8-thread × 500-write no loss, 4-producer +
+  4-consumer drain-to-empty, **4-thread × 1000 high-contention interleaved
+  push/pop with zero duplicates** (the same scenario the toy stack flakes
+  on under ABA), force_reclaim leaves retired queue empty
 
 ## v0.8 - Loom-checked correctness
 
