@@ -1,4 +1,4 @@
-//! samsara — endless rebirth. Allocate, mark, sweep, repeat.
+//! samsara - endless rebirth. Allocate, mark, sweep, repeat.
 //!
 //! A research-grade garbage collector built up in deliberate layers:
 //!
@@ -9,7 +9,7 @@
 //! 5. Lock-free remembered sets, generational regions
 //! 6. Concurrent marking (mutator + collector running simultaneously)
 //!
-//! v0.1 ships [`RegionHeap`] — fixed-size regions with state machines and a
+//! v0.1 ships [`RegionHeap`] - fixed-size regions with state machines and a
 //! sweep-and-reclaim cycle. The single-buffer [`Arena`] from v0.0 stays as
 //! the simplest substrate; [`RegionHeap`] is what every later GC technique
 //! is built on.

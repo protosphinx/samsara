@@ -1,16 +1,16 @@
 <h1 align="center">samsara</h1>
 
-<p align="center"><em>संसार — endless rebirth. Allocate, mark, sweep, repeat.</em></p>
+<p align="center"><em>संसार - endless rebirth. Allocate, mark, sweep, repeat.</em></p>
 
 ---
 
-A research-grade garbage collector in Rust. Mark-region heap, snapshot-at-the-beginning write barrier, lock-free remembered sets, concurrent marking — built up in deliberate layers from the bump allocator out.
+A research-grade garbage collector in Rust. Mark-region heap, snapshot-at-the-beginning write barrier, lock-free remembered sets, concurrent marking - built up in deliberate layers from the bump allocator out.
 
 ## The bet
 
-Modern GC research is dominated by JVM and CLR work that assumes a managed runtime. The interesting question is what a tracing collector looks like *as a Rust crate consumed by ordinary programs* — pluggable into your own object graph, abstract over how you store nodes, with the tri-color machinery exposed and testable in isolation.
+Modern GC research is dominated by JVM and CLR work that assumes a managed runtime. The interesting question is what a tracing collector looks like *as a Rust crate consumed by ordinary programs* - pluggable into your own object graph, abstract over how you store nodes, with the tri-color machinery exposed and testable in isolation.
 
-samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-color marker that consumes it, a bump arena underneath. Each subsequent version adds one piece of the modern GC stack — barrier, regions, generations, concurrency.
+samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-color marker that consumes it, a bump arena underneath. Each subsequent version adds one piece of the modern GC stack - barrier, regions, generations, concurrency.
 
 ## Roadmap
 
@@ -19,13 +19,13 @@ samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-colo
 | 0.0 | Bump arena + tri-color marker over `ObjectGraph` | **shipped** |
 | 0.1 | Mark-region heap with per-region states + sweep cycle | **shipped** |
 | 0.2 | Snapshot-at-the-beginning write barrier | next |
-| 0.3 | Concurrent marking — mutator and collector run simultaneously | |
+| 0.3 | Concurrent marking - mutator and collector run simultaneously | |
 | 0.4 | Lock-free remembered sets, generational regions | |
 | 0.5 | Loom-checked correctness + replay-tested mutator/collector races | |
 
 ## The tri-color invariant
 
-The mark phase maintains: *no black object references a white object*. The marker enforces this trivially in v0 (stop-the-world). In v0.2+ the write barrier preserves it under concurrent mutation — every reference write to a white target either greys the target or greys the source (Dijkstra-style insertion barrier vs. SATB deletion barrier).
+The mark phase maintains: *no black object references a white object*. The marker enforces this trivially in v0 (stop-the-world). In v0.2+ the write barrier preserves it under concurrent mutation - every reference write to a white target either greys the target or greys the source (Dijkstra-style insertion barrier vs. SATB deletion barrier).
 
 samsara picks SATB (Yuasa, 1990) because its overhead is bounded by allocation rate rather than write rate, and because the analysis of remembered-set correctness is cleaner.
 
@@ -52,9 +52,9 @@ let unreachable: Vec<_> = coloring
 
 ## Reading
 
-- Dijkstra, Lamport, Martin, Scholten, Steffens — *On-the-Fly Garbage Collection: an Exercise in Cooperation* (1978). The original tri-color analysis.
-- Yuasa — *Real-time garbage collection on general-purpose machines* (1990). SATB.
-- Blackburn, McKinley — *Immix: a mark-region garbage collector with space efficiency, fast collection, and mutator performance* (2008). The region-based design samsara converges on.
+- Dijkstra, Lamport, Martin, Scholten, Steffens - *On-the-Fly Garbage Collection: an Exercise in Cooperation* (1978). The original tri-color analysis.
+- Yuasa - *Real-time garbage collection on general-purpose machines* (1990). SATB.
+- Blackburn, McKinley - *Immix: a mark-region garbage collector with space efficiency, fast collection, and mutator performance* (2008). The region-based design samsara converges on.
 
 ## License
 

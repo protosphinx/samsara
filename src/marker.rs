@@ -24,7 +24,7 @@ pub enum Color {
 }
 
 /// An abstract object graph. The marker uses only [`roots`] (entry points)
-/// and [`refs_of`] (outgoing edges per node) — no notion of allocation,
+/// and [`refs_of`] (outgoing edges per node) - no notion of allocation,
 /// type, or layout leaks in.
 ///
 /// [`roots`]: ObjectGraph::roots
@@ -41,7 +41,7 @@ pub trait ObjectGraph {
 /// reachable object is `Black` and every unreachable object is `White`.
 ///
 /// Termination: the grey set strictly shrinks each iteration that does not
-/// discover a new node, and grows only by nodes never seen before — so the
+/// discover a new node, and grows only by nodes never seen before - so the
 /// algorithm terminates after at most `|V| + |E|` operations on a finite
 /// graph.
 pub fn mark<G: ObjectGraph>(graph: &G) -> HashMap<G::Id, Color> {

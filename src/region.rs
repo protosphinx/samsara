@@ -18,7 +18,7 @@
 //! sweep      →   regions with live_count == 0 → reset to Free
 //! ```
 //!
-//! Regions with at least one live object stay in place — the whole point of
+//! Regions with at least one live object stay in place - the whole point of
 //! mark-*region* (versus mark-*sweep*) is that you don't need to rescan
 //! object headers; you just decide per-region whether to keep it.
 //!
@@ -144,7 +144,7 @@ impl RegionHeap {
                 });
             }
         }
-        // Current region full or unset — find a free region.
+        // Current region full or unset - find a free region.
         for (i, r) in self.regions.iter_mut().enumerate() {
             if r.state == RegionState::Free {
                 if let Some(off) = r.try_alloc(size) {
@@ -289,7 +289,7 @@ mod tests {
         let used_before = h.region(a.region as usize).used();
 
         h.pre_mark();
-        h.mark_live(a); // only `a` survives — but region stays
+        h.mark_live(a); // only `a` survives - but region stays
         h.sweep();
 
         let used_after = h.region(a.region as usize).used();
