@@ -1,0 +1,14 @@
+[package]
+name = "samsara"
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+description = "A research-grade concurrent garbage collector. Endless rebirth, lock-free remembered sets."
+repository = "https://github.com/protosphinx/samsara"
+readme = "README.md"
+keywords = ["gc", "garbage-collection", "memory", "concurrent"]
+categories = ["memory-management", "concurrency"]
+
+[dependencies]
+
+[dev-dependencies]
