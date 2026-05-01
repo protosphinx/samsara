@@ -24,7 +24,15 @@ Sequenced milestones to a working concurrent mark-region GC.
   demonstration that SATB preserves objects orphaned mid-marking; negative
   control showing the same scenario loses objects without the barrier
 
-## v0.3 - concurrent marking
+## v0.3 - atomic phase + remembered set ✦ **shipped**
+
+- `AtomicPhase` with Acquire/Release semantics and CAS-based transitions
+- `RememberedSet` (multi-producer Mutex<Vec> queue) for capture
+- `AtomicWriteBarrier` over `(AtomicPhase, RememberedSet)`
+- Tests: 16 threads × 200 records all arrive; Idle phase records nothing;
+  CAS refuses out-of-order transitions
+
+## v0.4 - concurrent marking
 
 - Mutator and collector run simultaneously
 - Handshake protocol for stack snapshotting
