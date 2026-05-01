@@ -17,8 +17,8 @@ samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-colo
 | v   | Layer | Status |
 |-----|-------|--------|
 | 0.0 | Bump arena + tri-color marker over `ObjectGraph` | **shipped** |
-| 0.1 | Mark-region heap (Blackburn–McKinley 2008) — per-region free lists | next |
-| 0.2 | Snapshot-at-the-beginning write barrier | |
+| 0.1 | Mark-region heap with per-region states + sweep cycle | **shipped** |
+| 0.2 | Snapshot-at-the-beginning write barrier | next |
 | 0.3 | Concurrent marking — mutator and collector run simultaneously | |
 | 0.4 | Lock-free remembered sets, generational regions | |
 | 0.5 | Loom-checked correctness + replay-tested mutator/collector races | |

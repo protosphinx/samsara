@@ -8,12 +8,13 @@ Sequenced milestones to a working concurrent mark-region GC.
 - Tri-color marker over `ObjectGraph` trait
 - Tests: reachability, tri-color invariant, cycle termination, OOM
 
-## v0.1 — mark-region heap
+## v0.1 — mark-region heap ✦ **shipped**
 
-- Heap split into 32 KiB regions (Immix-shape)
-- Per-region free lists
-- Region states: free / partially-allocated / full / collecting
-- Defragmentation: opportunistic evacuation from sparse regions
+- 32 KiB regions; `Free` / `Allocating` / `Full` state machine
+- `RegionHeap`: alloc with current-region bumping + spillover, write/read,
+  `pre_mark` / `mark_live` / `sweep` cycle
+- Tests: spillover when full, sweep reclaims dead regions, partial-live
+  regions are not compacted, full alloc/mark/sweep cycle continues allocating
 
 ## v0.2 — write barrier
 
