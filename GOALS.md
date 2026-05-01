@@ -16,11 +16,13 @@ Sequenced milestones to a working concurrent mark-region GC.
 - Tests: spillover when full, sweep reclaims dead regions, partial-live
   regions are not compacted, full alloc/mark/sweep cycle continues allocating
 
-## v0.2 - write barrier
+## v0.2 - write barrier ✦ **shipped**
 
-- Snapshot-at-the-beginning (Yuasa) deletion barrier
-- Per-thread mark-stack
-- Barrier overhead microbenchmarks
+- `MarkStack` and `Phase` (Idle / Marking / Sweeping)
+- `WriteBarrier` with `pre_write` capturing overwritten references during Marking
+- Tests: barrier no-ops in Idle and Sweeping; captures in Marking; positive
+  demonstration that SATB preserves objects orphaned mid-marking; negative
+  control showing the same scenario loses objects without the barrier
 
 ## v0.3 - concurrent marking
 
