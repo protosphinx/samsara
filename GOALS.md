@@ -41,13 +41,21 @@ Sequenced milestones to a working concurrent mark-region GC.
 - Tests: reachable set marked, SATB captures picked up mid-run, busy
   mutator producing 1000 duplicate captures, prompt termination on no work
 
-## v0.5 - Loom-checked correctness
+## v0.5 - Treiber lock-free stack ✦ **shipped**
 
-- Loom tests against the marker under all interleavings up to N mutators
-- The "logical correctness under any schedule" property
-- Documents tested invariants
+- `TreiberStack` over `AtomicPtr<Node>` with push / pop / is_empty / Drop
+- Compare-and-swap retry loop on uncontended path; no syscall ceiling
+- Tests: single-thread LIFO order, 8-thread × 500-write multi-producer no
+  loss, 4 producers + 4 consumers drain to empty, interleaved push/pop
+  under contention with no duplicate values
 
-## v0.6 - generational + remembered sets
+## v0.6 - epoch-protected stack + Loom-checked correctness
+
+- Hazard pointers or epoch-based reclamation to defeat ABA
+- Wire the safe stack into `RememberedSet` behind a feature flag
+- Loom tests for the marker under all interleavings up to N mutators
+
+## v0.7 - generational + remembered sets
 
 - Young / old region partition
 - Lock-free card-marking remembered set
