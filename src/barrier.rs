@@ -22,7 +22,6 @@
 //!
 //! That invariant is what the tests in this module demonstrate.
 
-
 /// A simple FIFO/LIFO stack of object identifiers awaiting scan.
 #[derive(Default, Debug, Clone)]
 pub struct MarkStack {
@@ -282,6 +281,9 @@ mod tests {
         let black = drain_marker(&mut stack2, &graph);
 
         assert!(!black.contains(&b), "without SATB, B is lost");
-        assert!(!black.contains(&c), "without SATB, C is lost (transitively)");
+        assert!(
+            !black.contains(&c),
+            "without SATB, C is lost (transitively)"
+        );
     }
 }
