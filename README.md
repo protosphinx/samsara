@@ -8,6 +8,8 @@ A research-grade garbage collector in Rust. Mark-region heap, snapshot-at-the-be
 
 ## The bet
 
+![tests](https://img.shields.io/badge/tests-54%20passing-yellowgreen)
+
 Modern GC research is dominated by JVM and CLR work that assumes a managed runtime. The interesting question is what a tracing collector looks like *as a Rust crate consumed by ordinary programs* - pluggable into your own object graph, abstract over how you store nodes, with the tri-color machinery exposed and testable in isolation.
 
 samsara starts there: an abstract `ObjectGraph` trait, a stop-the-world tri-color marker that consumes it, a bump arena underneath. Each subsequent version adds one piece of the modern GC stack - barrier, regions, generations, concurrency.
