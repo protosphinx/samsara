@@ -94,10 +94,6 @@ mod tests {
         let mut sorted = drained.clone();
         sorted.sort_unstable();
         sorted.dedup();
-        assert_eq!(
-            sorted.len(),
-            drained.len(),
-            "no duplicate records expected"
-        );
+        assert_eq!(sorted.len(), drained.len(), "no duplicate records expected");
     }
 }
